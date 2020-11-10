@@ -1,1 +1,13 @@
-<p>search-options works!</p>
+<h4>Search</h4>
+  
+<input placeholder="search by subject" #searchBox id="search-boxS" (input)="search(searchBoxS.value)" />
+<input placeholder="search by course" #searchBox id="search-boxCr" (input)="search(searchBoxCr.value)" />
+<input placeholder="search by component" #searchBox id="search-boxCp" (input)="search(searchBoxCp.value)" />
+
+<ul class="search-result">
+  <li *ngFor="let hero of heroes$ | async" >
+    <a routerLink="/detail/{{hero.id}}">
+      {{hero.name}}
+    </a>
+  </li>
+</ul>
