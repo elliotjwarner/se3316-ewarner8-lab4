@@ -27,7 +27,7 @@ export class ClassService {
 
   constructor( private http: HttpClient ) { }
 
-  /** GET heroes from the server */
+  /** GET classes from the server */
   getClasses(): Observable<Class[]> {
     return this.http.get<Class[]>(this.classesUrl)
       .pipe(
@@ -36,7 +36,7 @@ export class ClassService {
       );
   }
 
-  /** GET hero by id. Will 404 if id not found */
+  /** GET classes by id. Will 404 if id not found */
   getClass(id: number): Observable<Class> {
     const url = `${this.classesUrl}/${id}`;
     return this.http.get<Class>(url).pipe(
@@ -45,10 +45,10 @@ export class ClassService {
     );
   }
 
-  /* GET heroes whose name contains search term */
+  /* GET classes whose name contains search term */
   searchClasses(term: string): Observable<Class[]> {
     if (!term.trim()) {
-      // if not search term, return empty hero array.
+      // if not search term, return empty classes array.
       return of([]);
     }
     return this.http.get<Class[]>(`${this.classesUrl}/?name=${term}`).pipe(

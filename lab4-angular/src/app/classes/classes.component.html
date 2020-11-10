@@ -1,0 +1,15 @@
+<h2>Classes</h2>
+
+<div>
+  <label>Class name:
+    <input #className />
+  </label>
+</div>
+
+<ul class="classes">
+  <li *ngFor="let class of classes">
+    <a routerLink="/detail/{{class.id}}">
+      <span class="badge">{{class.id}}</span> {{class.name}}
+    </a>
+  </li>
+</ul>

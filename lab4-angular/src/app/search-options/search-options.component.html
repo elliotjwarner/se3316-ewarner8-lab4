@@ -1,13 +1,13 @@
 <h4>Search</h4>
   
-<input placeholder="search by subject" #searchBox id="search-boxS" (input)="search(searchBoxS.value)" />
-<input placeholder="search by course" #searchBox id="search-boxCr" (input)="search(searchBoxCr.value)" />
-<input placeholder="search by component" #searchBox id="search-boxCp" (input)="search(searchBoxCp.value)" />
+<input placeholder="search by subject" #searchBoxS id="search-boxS" (input)="search(searchBoxS.value)" />
+<input placeholder="search by course" #searchBoxCr id="search-boxCr" (input)="search(searchBoxCr.value)" />
+<input placeholder="search by component" #searchBoxCp id="search-boxCp" (input)="search(searchBoxCp.value)" />
 
 <ul class="search-result">
-  <li *ngFor="let hero of heroes$ | async" >
-    <a routerLink="/detail/{{hero.id}}">
-      {{hero.name}}
+  <li *ngFor="let class of classes$ | async" >
+    <a routerLink="/detail/{{class.id}}">
+      {{class.name}}
     </a>
   </li>
 </ul>
