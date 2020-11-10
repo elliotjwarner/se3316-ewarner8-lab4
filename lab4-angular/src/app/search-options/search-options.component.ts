@@ -6,7 +6,7 @@ import {
    debounceTime, distinctUntilChanged, switchMap
  } from 'rxjs/operators';
 
-//import { Hero } from '../hero';
+import { Class } from '../class';
 import { ClassService } from '../classes.service';
 
 
@@ -35,7 +35,7 @@ export class SearchOptionsComponent implements OnInit {
       distinctUntilChanged(),
 
       // switch to new search observable each time the term changes
-      switchMap((term: string) => this.classService.searchClass(term)),
+      switchMap((term: string) => this.classService.searchClasses(term)),
     );
   }
 }
