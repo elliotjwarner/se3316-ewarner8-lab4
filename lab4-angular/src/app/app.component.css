@@ -1,0 +1,23 @@
+.homePage{
+    background-color: rgb(66, 0, 128);
+    flex-direction: column;
+    border-style: solid;
+    border-color: rgb(0, 28, 88);
+    padding:1%;
+}
+
+.timetableOptions{
+    background-color: rgb(198, 151, 241);
+    display: inline-block;
+    width: 48%;
+    border-style: solid;
+    border-color: rgb(0, 28, 88);
+}
+
+.searchOptions{
+    background-color: rgb(198, 151, 241);
+    display: inline-block;
+    width: 48%;
+    border-style: solid;
+    border-color: rgb(0, 28, 88);
+}
