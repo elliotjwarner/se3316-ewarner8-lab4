@@ -1,0 +1,41 @@
+{
+  "tables": [
+    {
+      "id": 0,
+      "name": "default",
+      "courses": []
+    },
+    {
+      "id": 1,
+      "name": "hi",
+      "courses": [
+        [
+          {
+            "catalog_nbr": "4823A",
+            "subject": "ACTURSCI",
+            "className": "SURVIVAL ANALYSIS",
+            "course_info": [
+              {
+                "class_nbr": 2814,
+                "start_time": "2:30 PM",
+                "descrlong": "Prerequisite(s): A minimum mark of 60% in Statistical Sciences 3858A/B.",
+                "end_time": "4:30 PM",
+                "campus": "Main",
+                "facility_ID": "WSC-248",
+                "days": [
+                  "M"
+                ],
+                "instructors": [],
+                "class_section": "001",
+                "ssr_component": "LEC",
+                "enrl_stat": "Not full",
+                "descr": ""
+              }
+            ],
+            "catalog_description": "Survival models, nonparametric estimation of the survival function, one and two or more sample hypothesis tests, inference for semiparametric regression models, inference for parametric regression models.\n\nExtra Information: 3 lecture hours."
+          }
+        ]
+      ]
+    }
+  ]
+}
