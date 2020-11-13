@@ -8,8 +8,8 @@
 
 <ul class="classes">
   <li *ngFor="let class of classes">
-    <a routerLink="/detail/{{class.id}}">
-      <span class="badge">{{class.id}}</span> {{class.name}}
+    <a routerLink="/detail/{{class.className}}">
+      <span class="badge">{{class.className}}</span> {{class.catalog_nbr}}
     </a>
   </li>
 </ul>

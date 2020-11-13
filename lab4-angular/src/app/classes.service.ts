@@ -3,6 +3,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Class } from './class';
+import { CLASSES } from './mock-classes';
+
 
 
 @Injectable({ providedIn: 'root' })
@@ -29,34 +31,48 @@ export class ClassService {
 
   /** GET classes from the server */
   getClasses(): Observable<Class[]> {
-    return this.http.get<Class[]>(this.classesUrl)
-      .pipe(
-        tap(_ => console.log('fetched classes')),
-        catchError(this.handleError<Class[]>('getClasses', []))
-      );
-  }
-
-  /** GET classes by id. Will 404 if id not found */
-  getClass(id: number): Observable<Class> {
-    const url = `${this.classesUrl}/${id}`;
-    return this.http.get<Class>(url).pipe(
-      tap(_ => console.log(`fetched class id=${id}`)),
-      catchError(this.handleError<Class>(`getClass id=${id}`))
-    );
-  }
+    return of(CLASSES);
+  };
 
   /* GET classes whose name contains search term */
-  searchClasses(term: string): Observable<Class[]> {
+  searchClassesSubj(term: string): Observable<Class[]> {
     if (!term.trim()) {
       // if not search term, return empty classes array.
       return of([]);
     }
-    return this.http.get<Class[]>(`${this.classesUrl}/?name=${term}`).pipe(
+    return this.http.get<Class[]>(`${CLASSES}/?subject=${term}`).pipe(
+      tap(x => x.length ?
+        console.log(`found classes matching "${term}"`) :
+        console.log(`no classes matching "${term}"`)),
+      catchError(this.handleError<Class[]>('searchClasses', []))
+    );
+  };
+  
+  /* GET classes whose name contains search term */
+  searchClassesCourse(term: string): Observable<Class[]> {
+    if (!term.trim()) {
+      // if not search term, return empty classes array.
+      return of([]);
+    }
+    return this.http.get<Class[]>(`${CLASSES}/?className=${term}`).pipe(
+      tap(x => x.length ?
+        console.log(`found classes matching "${term}"`) :
+        console.log(`no classes matching "${term}"`)),
+      catchError(this.handleError<Class[]>('searchClasses', []))
+    );
+  };
+
+  /* GET classes whose name contains search term */
+  searchClassesComp(term: string): Observable<Class[]> {
+    if (!term.trim()) {
+      // if not search term, return empty classes array.
+      return of([]);
+    }
+    return this.http.get<Class[]>(`${CLASSES}/?course_info.ssr_component=${term}`).pipe(
       tap(x => x.length ?
         console.log(`found classes matching "${term}"`) :
         console.log(`no classes matching "${term}"`)),
       catchError(this.handleError<Class[]>('searchClasses', []))
     );
   }
-
-}
+};

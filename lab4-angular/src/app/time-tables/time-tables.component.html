@@ -1,1 +1,24 @@
-<p>time-tables works!</p>
+<div class="table">
+    <div class="tableParams">
+        <h1>Time Table</h1>
+        <h4>Create/Delete Tables</h4>
+        <input type="text" id="tableName" placeholder= "Enter name here"  > 
+        <button id="newTable">Create new TimeTable</button><br/>
+        <input type="text" id="tablekiller" placeholder= "Enter table here"  > 
+        <button id="killTable">Delete TimeTable</button><br/>
+        <button id="killAllTables">Delete all TimeTables</button><br/>
+
+        <ul id="timetableList"> </ul>
+    </div>
+    <div class = "tableResult">
+        <div class = "tableAdding">
+            <h4>Display/Add to Tables</h4>
+            <input type="text" id="searchByCode" placeholder= "Course name"  > 
+            <input type="text" id="searchByCodeTable" placeholder= "Time Table"  > 
+            <button id="addCourse">Add course</button><br/>
+            <input type="text" id="displayTable" placeholder= "Time Table"  > 
+            <button id="showTable">Display Time Table</button><br/>
+        </div>
+         <ul id="timetable"> </ul>
+    </div>
+</div>

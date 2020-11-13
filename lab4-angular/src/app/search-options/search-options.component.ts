@@ -34,8 +34,8 @@ export class SearchOptionsComponent implements OnInit {
       // ignore new term if same as previous term
       distinctUntilChanged(),
 
-      // switch to new search observable each time the term changes
-      switchMap((term: string) => this.classService.searchClasses(term)),
-    );
+      // switch to new search observable each time the term changes      
+      switchMap((term: string) => this.classService.searchClassesSubj(term))
+      );
   }
 }
