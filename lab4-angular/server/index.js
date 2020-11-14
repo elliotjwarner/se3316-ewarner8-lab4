@@ -1,35 +1,40 @@
 const express = require('express');
 const router = express.Router();
 const Joi = require('joi'); //for security
+const app = express();
+const port = process.env.PORT || 8080;
 
 const low = require('lowdb');
 const FileSync = require('lowdb/adapters/FileSync');
-const timetables = new FileSync('./backend/timetable.json');
-const classes = new FileSync('./backend/Lab3-timetable-data.json');
+const timetables = new FileSync('./timetable.json');
+const classes = new FileSync('./Lab3-timetable-data.json');
 
 const db1 = low(classes);
 const db2 = low(timetables);
 
-router.use(express.json());
-
+app.use(express.json());
+app.use((req, res, next) => {
+    console.log( req.method + ' request for ' + req.url);
+    res.header('Access-Control-Allow-Origin', '*');
+    next();
+});
 
 //routes work except input validation and filtering
 //also i think im sending too much data back, could shorten that but whatever
 
 
 
-
 ///////////////////////////////////////////classes//////////////////////////////////////////////////////////////////
 
 //hompage get useed to show all courses 
-router.get('/class',(req, res) => {
+app.get('/api/class',(req, res) => {
     console.log('get all classes');
     const db = db1.get("classes").value();
     res.json(db);  
 });
 
 //get courses for a specific subject 
-router.get(`/class/:subj`,(req, res) => {
+app.get(`/api/class/:subj`,(req, res) => {
     console.log('get all classes for subj');
     let subj = req.params.subj.toUpperCase();
 
@@ -59,7 +64,7 @@ router.get(`/class/:subj`,(req, res) => {
 });
 
 //hompage get used to get courses for a specific subject 
-router.get('/class/:subj/:cod/:comp',(req, res) => {
+app.get('/api/class/:subj/:cod/:comp',(req, res) => {
     console.log('get all classes for subj, code, comp');
 
     let subj = req.params.subj.toUpperCase();//subject 
@@ -83,7 +88,7 @@ router.get('/class/:subj/:cod/:comp',(req, res) => {
 });
 
 //hompage get used to get courses for a specific subject no component 
-router.get('/class/:subj/:cod',(req, res) => {
+app.get('/api/class/:subj/:cod',(req, res) => {
     console.log('get all classes for subj, code');
 
     let subj = req.params.subj.toUpperCase();
@@ -114,7 +119,7 @@ router.get('/class/:subj/:cod',(req, res) => {
 ////////////////////////////////////////////timetables////////////////////////////////////////////////////////////
 
 //create new table 
-router.post('/table/newtable',(req, res) => {
+app.post('/api/table/newtable',(req, res) => {
 
     const ta = req.body[0];
     ta.id = db2.get('tables').size().value();
@@ -135,7 +140,7 @@ router.post('/table/newtable',(req, res) => {
 });
 
 //get all tables created by user 
-router.get('/table/tables',(req, res) => {
+app.get('/api/table/tables',(req, res) => {
     console.log('get all tables');
     db2.read();
     const db = db2.get('tables')
@@ -146,7 +151,7 @@ router.get('/table/tables',(req, res) => {
 });
 
 //show specific table 
-router.get('/table/tables/:name', (req, res) => {
+app.get('/api/table/tables/:name', (req, res) => {
     console.log('get one table');
     const n = req.params.name;
 
@@ -170,7 +175,7 @@ router.get('/table/tables/:name', (req, res) => {
 });
 
 //delete all tables made by user 
-router.delete('/table/killTable', (req, res) => {
+app.delete('/api/table/killTable', (req, res) => {
     let n = db2.get('tables').size().value();;
     while(n>0){
         db2.get('tables')
@@ -182,7 +187,7 @@ router.delete('/table/killTable', (req, res) => {
 })
 
 //delete specific table from user 
-router.delete('/table/killTable/:name', (req, res) => {
+app.delete('/api/table/killTable/:name', (req, res) => {
     const n = req.params.name;
 
     //input sanitization
@@ -204,7 +209,7 @@ router.delete('/table/killTable/:name', (req, res) => {
 })
 
 //add class to table 
-router.post('/:table/:class', (req, res) => {
+app.post('/api/:table/:class', (req, res) => {
 
     //parameters
     let table = req.params.table;
@@ -232,3 +237,7 @@ router.post('/:table/:class', (req, res) => {
 
 //export
 module.exports = router;
+
+app.listen(port, () => {
+    console.log('listening on port ' + port);
+});

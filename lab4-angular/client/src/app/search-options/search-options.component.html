@@ -3,27 +3,25 @@
 <!--send data to back end to be processed-->
 <div class="seperate"> 
   <h4>Show all courses</h4>
-  <button id="showAll" >click to show all courses</button><br/>
+  <button (click)="showAll()" id="showAll" >click to show all courses</button><br/>
 </div>
 <div class="seperate">
   <h4>Search by Subject</h4>
-  <input type="text" id="subj" placeholder= "Search by Subject"  > <br/>
-  <button id="showCode" >click to show results</button><br/>
+  <input [(ngModel)]="subj" type="text" id="subj" placeholder= "Search by Subject"  > <br/>
+  <button (click)="searchSubj(subj)"id="showCode" >click to show results</button><br/>
 </div>
 <div class="seperate">
   <h4> General Search </h4>
-  <input type="text" id="sub" placeholder= "Search by subject code: "  > <br/>
-  <input type="text" id="cod" placeholder= "Search by course code: "  > <br/>
-  <input type="text" id="comp" placeholder= "Search by course component: "  > <br/>
-  <button id="show" >click to show results</button><br/>
+  <input type="text" [(ngModel)]="subj" placeholder= "Search by subject code: "  > <br/>
+  <input type="text" [(ngModel)]="cod"  placeholder= "Search by course code: "  > <br/>
+  <input type="text" [(ngModel)]="comp" placeholder= "Search by course component: "  > <br/>
+  <button (click)="searchSubjCodeComp(subj,cod,comp)"id="show" >click to show results</button><br/>
 </div>
 
 <!--display data from backend here-->
 <h2>Search Results</h2>
 <ul class="search-result">
-  <li *ngFor="let class of classes$ | async" >
-    <a routerLink="/detail/{{class.catalog_nbr}}">
+  <li *ngFor="let class of classes$" >
       {{class.className}}
-    </a>
   </li>
 </ul>

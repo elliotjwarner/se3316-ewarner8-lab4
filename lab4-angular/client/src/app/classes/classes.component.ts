@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Class } from '../class';
-import { ClassService } from '../classes.service';
+import { ClassesService } from '../classes.service';
 
 
 @Component({
@@ -10,15 +10,10 @@ import { ClassService } from '../classes.service';
 })
 export class ClassesComponent implements OnInit {
   classes: Class[];
-  constructor(private classesService: ClassService) { }
+  constructor(private classesService: ClassesService) { }
 
   ngOnInit(): void {
-    this.getClasses();
   }
 
-  getClasses(): void {
-    this.classesService.getClasses()
-    .subscribe(classes => this.classes = classes);
-  }
 
 }

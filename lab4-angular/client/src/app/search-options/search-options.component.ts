@@ -1,13 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-
 import { Observable, Subject } from 'rxjs';
-
-import {
-   debounceTime, distinctUntilChanged, switchMap
- } from 'rxjs/operators';
-
 import { Class } from '../class';
-import { ClassService } from '../classes.service';
+import { ClassesService } from '../classes.service';
+import { takeUntil } from 'rxjs/operators';
+
 
 
 @Component({
@@ -19,23 +15,39 @@ export class SearchOptionsComponent implements OnInit {
   classes$: Observable<Class[]>;
   private searchTerms = new Subject<string>();
 
-  constructor(private classService: ClassService) {}
+  subj:string;
+  comp:string;
+  cod:string;
+
+  constructor(private classService: ClassesService) {}
 
   // Push a search term into the observable stream.
-  search(term: string): void {
-    this.searchTerms.next(term);
-  }
+  destroy$: Subject<boolean> = new Subject<boolean>();
+
 
   ngOnInit(): void {
-    this.classes$ = this.searchTerms.pipe(
-      // wait 300ms after each keystroke before considering the term
-      debounceTime(300),
+    this.showAll();
+  }
 
-      // ignore new term if same as previous term
-      distinctUntilChanged(),
+  showAll() {
+    this.classService.getClasses().subscribe((result:Observable<Class[]>) =>{
+      this.classes$ = result;
+      console.log('result is ', this.classes$);
 
-      // switch to new search observable each time the term changes      
-      switchMap((term: string) => this.classService.searchClassesSubj(term))
-      );
+    })  
+  }
+
+  searchSubj(subj){
+    this.classService.searchClassesSubj(subj).subscribe(result =>{
+      console.log('result is ', result);
+      this.classes$ = result[''];
+    })  
+  }
+
+  searchSubjCodeComp(subj, code, comp){
+    this.classService.searchClassesComp(subj,code,comp).subscribe(result =>{
+      console.log('result is ', result);
+      this.classes$ = result['data'];
+    })  
   }
 }
