@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { Class } from '../class';
 import { ClassesService } from '../classes.service';
+import { CommonModule } from '@angular/common';
 
 
 @Component({

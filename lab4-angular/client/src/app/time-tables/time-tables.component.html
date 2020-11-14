@@ -1,24 +1,33 @@
-<div class="table">
-    <div class="tableParams">
-        <h1>Time Table</h1>
-        <h4>Create/Delete Tables</h4>
-        <input type="text" id="tableName" placeholder= "Enter name here"  > 
-        <button id="newTable">Create new TimeTable</button><br/>
-        <input type="text" id="tablekiller" placeholder= "Enter table here"  > 
-        <button id="killTable">Delete TimeTable</button><br/>
-        <button id="killAllTables">Delete all TimeTables</button><br/>
+<div class="tableParams">
+    <h1>Time Table</h1>
+    <h4>Create/Delete Tables</h4>
+    <input type="text" id="tableName" placeholder= "Enter name here"  > 
+        
+    <button id="newTable" (click)="newTable(Tname)">Create new TimeTable</button><br/>
+    <input type="text" id="tablekiller" placeholder= "Enter table here"  > 
+      
+    <button id="killTable" (click)="deleteTable(Tname)">Delete TimeTable</button><br/>
+    <button id="killAllTables" (click)="deleteAllTables()">Delete all TimeTables</button><br/>
 
-        <ul id="timetableList"> </ul>
+    <ul class="timetableList"> 
+        <li *ngFor = "let table of tables$">
+            {{table.name}}
+        </li>
+    </ul>
+</div>
+<div class = "tableResult">
+    <div class = "tableAdding">
+        <h4>Display/Add to Tables</h4>
+        <input type="text" id="searchByCode" placeholder= "Course name"  > 
+        <input type="text" id="searchByCodeTable" placeholder= "Time Table"  > 
+            
+        <button id="addCourse" (click)="addCourse(Tname, Cname)">Add course</button><br/>
+        <input type="text" id="displayTable" placeholder= "Time Table"  > 
+            
+        <button id="showTable" (click)="showTable(Tname)">Display Time Table</button><br/>
     </div>
-    <div class = "tableResult">
-        <div class = "tableAdding">
-            <h4>Display/Add to Tables</h4>
-            <input type="text" id="searchByCode" placeholder= "Course name"  > 
-            <input type="text" id="searchByCodeTable" placeholder= "Time Table"  > 
-            <button id="addCourse">Add course</button><br/>
-            <input type="text" id="displayTable" placeholder= "Time Table"  > 
-            <button id="showTable">Display Time Table</button><br/>
-        </div>
-         <ul id="timetable"> </ul>
-    </div>
+    <!--have to only show one timetable but look through its courses-->
+    <ul id="timetable"> 
+            
+    </ul>
 </div>

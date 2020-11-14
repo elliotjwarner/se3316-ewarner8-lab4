@@ -3,15 +3,17 @@
     flex-direction: column;
     border-style: solid;
     border-color: rgb(0, 28, 88);
-    padding:1%;
+    padding:2%;
 }
 
 .timetableOptions{
     background-color: rgb(198, 151, 241);
     display: inline-block;
+    vertical-align: top;
     width: 48%;
     border-style: solid;
     border-color: rgb(0, 28, 88);
+    
 }
 
 .searchOptions{

@@ -119,9 +119,9 @@ app.get('/api/class/:subj/:cod',(req, res) => {
 ////////////////////////////////////////////timetables////////////////////////////////////////////////////////////
 
 //create new table 
-app.post('/api/table/newtable',(req, res) => {
+app.post('/api/table/:newtable',(req, res) => {
 
-    const ta = req.body[0];
+    const ta = req.params.newtable;
     ta.id = db2.get('tables').size().value();
 
     //check name is not null
@@ -187,7 +187,7 @@ app.delete('/api/table/killTable', (req, res) => {
 })
 
 //delete specific table from user 
-app.delete('/api/table/killTable/:name', (req, res) => {
+app.delete('/api/table/killTables/:name', (req, res) => {
     const n = req.params.name;
 
     //input sanitization
@@ -209,7 +209,7 @@ app.delete('/api/table/killTable/:name', (req, res) => {
 })
 
 //add class to table 
-app.post('/api/:table/:class', (req, res) => {
+app.post('/api/table/:table/:class', (req, res) => {
 
     //parameters
     let table = req.params.table;

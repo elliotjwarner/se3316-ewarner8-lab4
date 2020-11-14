@@ -13,6 +13,8 @@ export class ClassesService {
 
   constructor( private http: HttpClient ) { }
 
+
+  //////////////////////////////////////classes////////////////////////////////////
   /* GET classes from the server */
   getClasses(){
     return this.http.get(this.rootUrl + '/class');
@@ -28,4 +30,35 @@ export class ClassesService {
     return this.http.get(this.rootUrl+ '/class/' + subj + code + comp)
   };
 
+
+  ////////////////////////////////////tables////////////////////////////////////
+  //create new table
+  newTable(name){
+    return this.http.get(this.rootUrl + '/table/' + name);
+  }
+
+  //delete table
+  deleteTable(name){
+    return this.http.get(this.rootUrl + '/table/killTable'+name);
+  }
+
+  //delete all tables
+  deleteAllTables(){
+    return this.http.get(this.rootUrl + '/table/killTables');
+  }
+
+  //addcourse to table
+  addCourse(Tname,Cname){
+    return this.http.get(this.rootUrl + '/table'+Tname+Cname);
+  }
+
+  //show table
+  showTable(name){
+    return this.http.get(this.rootUrl + '/table/tables'+name);
+  }
+
+  showAllTables(){
+    return this.http.get(this.rootUrl + '/table/tables');
+
+  }
 };
