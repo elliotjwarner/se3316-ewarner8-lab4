@@ -8,34 +8,57 @@
     {
       "id": 1,
       "name": "hi",
-      "courses": [
-        [
-          {
-            "catalog_nbr": "4823A",
-            "subject": "ACTURSCI",
-            "className": "SURVIVAL ANALYSIS",
-            "course_info": [
-              {
-                "class_nbr": 2814,
-                "start_time": "2:30 PM",
-                "descrlong": "Prerequisite(s): A minimum mark of 60% in Statistical Sciences 3858A/B.",
-                "end_time": "4:30 PM",
-                "campus": "Main",
-                "facility_ID": "WSC-248",
-                "days": [
-                  "M"
-                ],
-                "instructors": [],
-                "class_section": "001",
-                "ssr_component": "LEC",
-                "enrl_stat": "Not full",
-                "descr": ""
-              }
-            ],
-            "catalog_description": "Survival models, nonparametric estimation of the survival function, one and two or more sample hypothesis tests, inference for semiparametric regression models, inference for parametric regression models.\n\nExtra Information: 3 lecture hours."
-          }
-        ]
-      ]
+      "courses": []
+    },
+    {
+      "id": 2,
+      "name": "hewy",
+      "courses": []
+    },
+    {
+      "id": 3,
+      "name": "hty",
+      "courses": []
+    },
+    {
+      "id": 4,
+      "name": "ht",
+      "courses": []
+    },
+    {
+      "id": 5,
+      "name": "fuck",
+      "courses": []
+    },
+    {
+      "id": 6,
+      "name": "hyhyhunjkml",
+      "courses": []
+    },
+    {
+      "id": 7,
+      "name": "h",
+      "courses": []
+    },
+    {
+      "id": 8,
+      "name": "knkn",
+      "courses": []
+    },
+    {
+      "id": 9,
+      "name": "fuckkkk",
+      "courses": []
+    },
+    {
+      "id": 10,
+      "name": "fuckkkk",
+      "courses": []
+    },
+    {
+      "id": 11,
+      "name": "fuckkkk",
+      "courses": []
     }
   ]
 }

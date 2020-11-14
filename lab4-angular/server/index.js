@@ -16,6 +16,7 @@ app.use(express.json());
 app.use((req, res, next) => {
     console.log( req.method + ' request for ' + req.url);
     res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT, DELETE');
     next();
 });
 
@@ -27,7 +28,7 @@ app.use((req, res, next) => {
 ///////////////////////////////////////////classes//////////////////////////////////////////////////////////////////
 
 //hompage get useed to show all courses 
-app.get('/api/class',(req, res) => {
+app.get(`/api/class`,(req, res) => {
     console.log('get all classes');
     const db = db1.get("classes").value();
     res.json(db);  
@@ -64,7 +65,7 @@ app.get(`/api/class/:subj`,(req, res) => {
 });
 
 //hompage get used to get courses for a specific subject 
-app.get('/api/class/:subj/:cod/:comp',(req, res) => {
+app.get(`/api/class/:subj/:cod/:comp`,(req, res) => {
     console.log('get all classes for subj, code, comp');
 
     let subj = req.params.subj.toUpperCase();//subject 
@@ -88,7 +89,7 @@ app.get('/api/class/:subj/:cod/:comp',(req, res) => {
 });
 
 //hompage get used to get courses for a specific subject no component 
-app.get('/api/class/:subj/:cod',(req, res) => {
+app.get(`/api/class/:subj/:cod`,(req, res) => {
     console.log('get all classes for subj, code');
 
     let subj = req.params.subj.toUpperCase();
@@ -119,10 +120,16 @@ app.get('/api/class/:subj/:cod',(req, res) => {
 ////////////////////////////////////////////timetables////////////////////////////////////////////////////////////
 
 //create new table 
-app.post('/api/table/:newtable',(req, res) => {
+app.post(`/api/table/:newtable`,(req, res) => {
 
-    const ta = req.params.newtable;
-    ta.id = db2.get('tables').size().value();
+    let ta = req.params.newtable;//name
+    let Tid = db2.get('tables').size().value();//id
+
+    const table = { 
+        id : Tid, 
+        name : ta,
+        courses : []
+    };
 
     //check name is not null
 
@@ -132,26 +139,27 @@ app.post('/api/table/:newtable',(req, res) => {
 
     //save to db
     db2.get('tables')
-        .push(ta)
+        .push(table)
         .write();
 
-    res.send(200);
+    res.json(table);
+
 
 });
 
 //get all tables created by user 
-app.get('/api/table/tables',(req, res) => {
+app.get(`/api/table/tables`,(req, res) => {
     console.log('get all tables');
     db2.read();
     const db = db2.get('tables')
         .sortBy('name')
         .values();
 
-    res.json(db);    
+    res.send(db);    
 });
 
 //show specific table 
-app.get('/api/table/tables/:name', (req, res) => {
+app.get(`/api/table/tables/:name`, (req, res) => {
     console.log('get one table');
     const n = req.params.name;
 
@@ -175,7 +183,7 @@ app.get('/api/table/tables/:name', (req, res) => {
 });
 
 //delete all tables made by user 
-app.delete('/api/table/killTable', (req, res) => {
+app.delete(`/api/table/killTable`, (req, res) => {
     let n = db2.get('tables').size().value();;
     while(n>0){
         db2.get('tables')
@@ -183,11 +191,12 @@ app.delete('/api/table/killTable', (req, res) => {
         .write();  
         n--;
     }
-    res.sendStatus(status);
+    res.json('success');
+
 })
 
 //delete specific table from user 
-app.delete('/api/table/killTables/:name', (req, res) => {
+app.delete(`/api/table/killTables/:name`, (req, res) => {
     const n = req.params.name;
 
     //input sanitization
@@ -205,12 +214,17 @@ app.delete('/api/table/killTables/:name', (req, res) => {
         .write();
         console.log(db2.value());
     
+        res.json('success');
 
 })
 
 //add class to table 
-app.post('/api/table/:table/:class', (req, res) => {
+app.post(`/api/table/:table/:class`, (req, res) => {
 
+    res.catch(err=>{
+        res.send(err, 'something wrong')
+    })
+    
     //parameters
     let table = req.params.table;
     let cl = req.params.class.toUpperCase();
@@ -229,10 +243,10 @@ app.post('/api/table/:table/:class', (req, res) => {
         .find({name: table})
         .get('courses')                                                 
         .push(db)           
-        .write();     
-        
-    res.send(200);
-});
+        .write();
+
+        res.json('success');
+    });
 
 
 //export

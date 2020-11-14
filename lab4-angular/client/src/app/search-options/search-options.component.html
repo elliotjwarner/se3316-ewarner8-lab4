@@ -1,17 +1,19 @@
 <h2>Search</h2>
   
-<!--send data to back end to be processed-->
+<!--first functionality-->
 <div class="seperate"> 
   <h4>Show all courses</h4>
   <button (click)="showAll()" id="showAll" >click to show all courses</button><br/>
 </div>
 
+<!--second functionality-->
 <div class="seperate">
   <h4>Search by Subject</h4>
   <input [(ngModel)]="subj" type="text" id="subj" placeholder= "Search by Subject"  > <br/>
   <button (click)="searchSubj(subj)"id="showCode" >click to show results</button><br/>
 </div>
 
+<!--third functionality-->
 <div class="seperate">
   <h4> General Search </h4>
   <input type="text" [(ngModel)]="subj" placeholder= "Search by subject code: "  > <br/>
@@ -20,7 +22,7 @@
   <button (click)="searchSubjCodeComp(subj,cod,comp)"id="show" >click to show results</button><br/>
 </div>
 
-<!--display data from backend here-->
+<!--display all data from backend here-->
 <h2>Search Results</h2>
 <ul class="search-result">
   <li *ngFor="let class of classes$" >

@@ -18,6 +18,9 @@ export class TimeTablesComponent implements OnInit {
   name:string;
   Tname:string;
   Cname:string;
+  Nname:string;
+  Dname:string;
+  Sname:string;
 
   constructor(private classService: ClassesService) { }
 
@@ -31,14 +34,16 @@ export class TimeTablesComponent implements OnInit {
     })  
   }
 
-  newTable(name){
-    this.classService.newTable(name).subscribe((result:Observable<Table[]>) =>{
+  newTable(Nname){
+    this.classService.newTable(Nname).subscribe((result:Observable<Table[]>) =>{
+      console.log(result);
       this.tables$ = result;
+      this.showTables();
     }) 
   }
 
-  deleteTable(name){
-    this.classService.deleteTable(name).subscribe((result:Observable<Table[]>) =>{
+  deleteTable(Dname){
+    this.classService.deleteTable(Dname).subscribe((result:Observable<Table[]>) =>{
       this.tables$ = result;
     }) 
   }

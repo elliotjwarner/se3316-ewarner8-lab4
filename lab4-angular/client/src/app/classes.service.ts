@@ -34,31 +34,32 @@ export class ClassesService {
   ////////////////////////////////////tables////////////////////////////////////
   //create new table
   newTable(name){
-    return this.http.get(this.rootUrl + '/table/' + name);
-  }
+    return this.http.post(this.rootUrl + '/table/' + name, null);
+  };
 
   //delete table
   deleteTable(name){
-    return this.http.get(this.rootUrl + '/table/killTable'+name);
-  }
+    return this.http.delete(this.rootUrl + '/table/killTable/'+name);
+  };
 
   //delete all tables
   deleteAllTables(){
-    return this.http.get(this.rootUrl + '/table/killTables');
-  }
+    return this.http.delete(this.rootUrl + '/table/killTables');
+  };
 
   //addcourse to table
   addCourse(Tname,Cname){
-    return this.http.get(this.rootUrl + '/table'+Tname+Cname);
-  }
+    return this.http.post(this.rootUrl + '/table/'+Tname+'/'+Cname,null);
+  };
 
   //show table
   showTable(name){
-    return this.http.get(this.rootUrl + '/table/tables'+name);
-  }
+    return this.http.get(this.rootUrl + '/table/tables/'+name);
+  };
 
   showAllTables(){
     return this.http.get(this.rootUrl + '/table/tables');
 
-  }
+  };
+
 };
