@@ -20,12 +20,12 @@ export class ClassesService {
 
   /* GET classes by subject */
   searchClassesSubj(subj){
-    return this.http.get('/api/'+subj);
+    return this.http.get(this.rootUrl+ '/class/' + subj);
   };
 
   /* GET classes by subject, code, and component */
   searchClassesComp(subj,code,comp) {
-    return this.http.get('/api/'+subj+code+comp)
+    return this.http.get(this.rootUrl+ '/class/' + subj + code + comp)
   };
 
 };
