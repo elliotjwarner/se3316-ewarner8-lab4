@@ -35,3 +35,10 @@
     max-height: 500px;
     text-align: center;
   }
+  .timetable{
+    background-color: #dcc4f8;
+    display: block;
+    text-align: center;
+    padding: 5%;
+    margin:1%;
+  }

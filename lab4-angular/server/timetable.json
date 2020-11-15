@@ -2,17 +2,7 @@
   "tables": [
     {
       "id": 0,
-      "name": "default",
-      "courses": []
-    },
-    {
-      "id": 1,
-      "name": "hi",
-      "courses": []
-    },
-    {
-      "id": 2,
-      "name": "hey",
+      "name": "default table",
       "courses": []
     }
   ]

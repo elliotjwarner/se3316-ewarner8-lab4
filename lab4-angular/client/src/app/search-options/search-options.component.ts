@@ -48,7 +48,7 @@ export class SearchOptionsComponent implements OnInit {
       return;
     }
 
-    else if(!code){
+    else if(!comp){
       this.classService.searchClassesCod(subj,code).subscribe((result:Observable<Class[]>) =>{
         this.classes$ = result;
         return;

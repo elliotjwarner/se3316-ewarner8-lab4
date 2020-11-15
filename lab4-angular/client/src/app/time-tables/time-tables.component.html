@@ -27,16 +27,14 @@
         <button id="showTable" (click)="showTable(Sname)">Display Time Table</button><br/>
 
         <!--add course to specific table-->
-        <input type="text" [(ngModel)]="Cname" id="searchByCode" placeholder= "Course code"  > 
+        <input type="text" [(ngModel)]="Cname" id="searchByCode" placeholder= "Course name"  > 
         <input type="text" [(ngModel)]="Tname" id="searchByCodeTable" placeholder= "Time Table"  >    
         <button id="addCourse" (click)="addCourse(Tname, Cname)">Add course</button><br/>
     
     </div>
 
     <!--have to only show one timetable but go through its courses-->
-    <ul id="timetable"> 
-        <li *ngFor = "let sched of scheds$">
-            {{table.name}}
-        </li>
-    </ul>
+    <div class="timetable"> 
+        {{scheds$.name}}
+    </div>
 </div>

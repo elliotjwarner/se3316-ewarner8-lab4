@@ -3,7 +3,6 @@ import { Observable, Scheduler, Subject } from 'rxjs';
 import { Table } from '../timetable';
 import { Sched } from '../sched';
 import { ClassesService } from '../classes.service';
-import { CommonModule } from '@angular/common';
 
 
 
@@ -27,7 +26,12 @@ export class TimeTablesComponent implements OnInit {
   constructor(private classService: ClassesService) { }
 
   ngOnInit(): void {
+    this.showSingleTable();
     this.showTables();
+  }
+
+  showSingleTable(){
+    this.showTable('default table');
   }
 
   showTables(){
@@ -73,8 +77,8 @@ export class TimeTablesComponent implements OnInit {
       console.log('invalid course');
       return;
     }
-    this.classService.addCourse(Tname,Cname).subscribe((result:Observable<Table[]>) =>{
-      this.tables$ = result;
+    this.classService.addCourse(Tname,Cname).subscribe((result:Observable<Sched[]>) =>{
+      this.scheds$ = result;
     }) 
   }
 
@@ -85,6 +89,8 @@ export class TimeTablesComponent implements OnInit {
     }
     this.classService.showTable(name).subscribe((result:Observable<Sched[]>) =>{
       this.scheds$ = result;
+      console.log(this.scheds$);
+
     }) 
   }
 }

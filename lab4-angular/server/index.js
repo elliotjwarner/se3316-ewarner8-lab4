@@ -1,9 +1,9 @@
+//////////////////////////////////////////////////imports////////////////////////////////////////////////////////////////
 const express = require('express');
 const router = express.Router();
 const Joi = require('joi'); //for security
 const app = express();
 const port = process.env.PORT || 8080;
-
 const low = require('lowdb');
 const FileSync = require('lowdb/adapters/FileSync');
 const timetables = new FileSync('./timetable.json');
@@ -11,10 +11,13 @@ const classes = new FileSync('./Lab3-timetable-data.json');
 const sanitizer = require('sanitize')();
 const db1 = low(classes);
 const db2 = low(timetables);
+const clean = require('xss-clean/lib/xss').clean
+/////////////////////////////////////////middleware/////////////////////////////////////////////////////////////////////
 
-//filtering againt HTML/JS injections
-app.use(xss());
+//translate everything to json
 app.use(express.json());
+
+//log requests comming to backend for debugging 
 app.use((req, res, next) => {
     console.log( req.method + ' request for ' + req.url);
     res.header('Access-Control-Allow-Origin', '*');
@@ -45,10 +48,7 @@ app.get(`/api/class/:subj`,(req, res) => {
     console.log('get all classes for subj');
     let subj = req.params.subj.toUpperCase();
     subj = spaces(subj);
-    //verify input is safe
-    const schema = Joi.object().keys({ 
-        subj: Joi.string().alphanum().min(3).max(30).required(),
-      }); 
+    subj = clean(subj);
 
 
     const db = db1.get("classes")
@@ -67,12 +67,9 @@ app.get(`/api/class/:subj/:cod/:comp`,(req, res) => {
     let comp = req.params.comp.toUpperCase(); // couse component
     subj = spaces(subj);
     cod = spaces(cod);
-
-    //check name is not null
-
-    //check name is unique
-
-    //verify name is unique
+    subj = clean(subj);
+    cod = clean(cod);
+    comp = clean(comp);
 
     const db = db1.get( 'classes')
         .filter({subject: subj, catalog_nbr: cod})
@@ -92,11 +89,8 @@ app.get(`/api/class/:subj/:cod`,(req, res) => {
     let cod = req.params.cod.toUpperCase();
     subj = spaces(subj);
     cod = spaces(cod);
-    //check name is not null
-
-    //check name is unique
-
-    //verify name is unique
+    subj = clean(subj);
+    cod = clean(cod);
 
     const db = db1.get( 'classes')
         .filter({subject: subj,className: cod,})
@@ -120,6 +114,8 @@ app.get(`/api/class/:subj/:cod`,(req, res) => {
 app.post(`/api/table/:newtable`,(req, res) => {
 
     let ta = req.params.newtable;//name
+    ta = clean(ta);
+
 
     //ensure name is unique
     let ting = db2.get('tables').find({name : ta}).value();
@@ -163,7 +159,8 @@ app.get(`/api/table/tables`,(req, res) => {
 //show specific table 
 app.get(`/api/table/tables/:name`, (req, res) => {
     console.log('get one table');
-    const n = req.params.name;
+    let n = req.params.name;
+    n = clean(n);
 
 
     db2.read();
@@ -190,8 +187,9 @@ app.delete(`/api/table/killTable`, (req, res) => {
 
 //delete specific table from user 
 app.delete(`/api/table/killTables/:name`, (req, res) => {
-    const n = req.params.name;
-    
+    let n = req.params.name;
+    n = clean(n);
+
     db2.get('tables')
         .remove({name: n})
         .write();
@@ -208,6 +206,8 @@ app.post(`/api/table/:table/:class`, (req, res) => {
     //parameters
     let table = req.params.table;
     let cl = req.params.class.toUpperCase();
+    table = clean(table);
+    cl = clean(cl);
 
 
     db1.read();
@@ -215,7 +215,7 @@ app.post(`/api/table/:table/:class`, (req, res) => {
 
     //get class
     let db = db1.get( 'classes')
-        .filter({catalog_nbr: cl})
+        .filter({className: cl})
         .value();
 
     //rewrite courses array in specific table
