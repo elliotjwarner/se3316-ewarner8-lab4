@@ -6,10 +6,11 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class ClassesService {
 
   rootUrl = 'http://localhost:8080/api';  // URL to web api
-
+/*
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
+  */
 
   constructor( private http: HttpClient ) { }
 
@@ -25,9 +26,14 @@ export class ClassesService {
     return this.http.get(this.rootUrl+ '/class/' + subj);
   };
 
+  /* GET classes by subject, and  code */
+  searchClassesCod(subj,code) {
+    return this.http.get(this.rootUrl+ '/class/' + subj +'/'+ code)
+  };
+
   /* GET classes by subject, code, and component */
   searchClassesComp(subj,code,comp) {
-    return this.http.get(this.rootUrl+ '/class/' + subj + code + comp)
+    return this.http.get(this.rootUrl+ '/class/' + subj +'/'+ code +'/'+ comp)
   };
 
 
@@ -39,17 +45,17 @@ export class ClassesService {
 
   //delete table
   deleteTable(name){
-    return this.http.delete(this.rootUrl + '/table/killTable/'+name);
+    return this.http.delete(this.rootUrl + '/table/killTable/'+name, {headers:{'Content-Type':'application/json'}});
   };
 
   //delete all tables
   deleteAllTables(){
-    return this.http.delete(this.rootUrl + '/table/killTables');
+    return this.http.delete(this.rootUrl + '/table/killTables', {headers:{'Content-Type':'application/json'}});
   };
 
   //addcourse to table
   addCourse(Tname,Cname){
-    return this.http.post(this.rootUrl + '/table/'+Tname+'/'+Cname,null);
+    return this.http.post(this.rootUrl + '/table/'+Tname+'/'+Cname, null);
   };
 
   //show table

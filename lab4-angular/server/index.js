@@ -8,17 +8,23 @@ const low = require('lowdb');
 const FileSync = require('lowdb/adapters/FileSync');
 const timetables = new FileSync('./timetable.json');
 const classes = new FileSync('./Lab3-timetable-data.json');
-
+const sanitizer = require('sanitize')();
 const db1 = low(classes);
 const db2 = low(timetables);
 
+//filtering againt HTML/JS injections
+app.use(xss());
 app.use(express.json());
 app.use((req, res, next) => {
     console.log( req.method + ' request for ' + req.url);
     res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT, DELETE');
     next();
 });
+
+function spaces(s){
+    str = s.replace(/%/g,' ');
+    return str.trim();
+}
 
 //routes work except input validation and filtering
 //also i think im sending too much data back, could shorten that but whatever
@@ -38,24 +44,12 @@ app.get(`/api/class`,(req, res) => {
 app.get(`/api/class/:subj`,(req, res) => {
     console.log('get all classes for subj');
     let subj = req.params.subj.toUpperCase();
-
+    subj = spaces(subj);
     //verify input is safe
     const schema = Joi.object().keys({ 
         subj: Joi.string().alphanum().min(3).max(30).required(),
       }); 
-      //subj = Joi.validate(subj, schema);
 
-      schema.validate(subj, (err, value) => {
-
-        if (err) {
-    
-            console.log(err.details);
-    
-        } else {
-    
-            console.log(value);
-        }
-    });
 
     const db = db1.get("classes")
         .filter({subject: subj})
@@ -71,6 +65,8 @@ app.get(`/api/class/:subj/:cod/:comp`,(req, res) => {
     let subj = req.params.subj.toUpperCase();//subject 
     let cod = req.params.cod.toUpperCase(); //course code
     let comp = req.params.comp.toUpperCase(); // couse component
+    subj = spaces(subj);
+    cod = spaces(cod);
 
     //check name is not null
 
@@ -79,7 +75,7 @@ app.get(`/api/class/:subj/:cod/:comp`,(req, res) => {
     //verify name is unique
 
     const db = db1.get( 'classes')
-        .filter({subject: subj, className: cod})
+        .filter({subject: subj, catalog_nbr: cod})
         .get('course_info')
         .filter({ssr_component: comp})
         .value();
@@ -94,7 +90,8 @@ app.get(`/api/class/:subj/:cod`,(req, res) => {
 
     let subj = req.params.subj.toUpperCase();
     let cod = req.params.cod.toUpperCase();
-
+    subj = spaces(subj);
+    cod = spaces(cod);
     //check name is not null
 
     //check name is unique
@@ -123,6 +120,16 @@ app.get(`/api/class/:subj/:cod`,(req, res) => {
 app.post(`/api/table/:newtable`,(req, res) => {
 
     let ta = req.params.newtable;//name
+
+    //ensure name is unique
+    let ting = db2.get('tables').find({name : ta}).value();
+    console.log(ting);
+    if(ting !=null){
+        console.log('name is not unique');
+        ting=null;
+        return;
+    }
+
     let Tid = db2.get('tables').size().value();//id
 
     const table = { 
@@ -131,18 +138,13 @@ app.post(`/api/table/:newtable`,(req, res) => {
         courses : []
     };
 
-    //check name is not null
-
-    //check name is unique
-
-    //verify input is not harmful
 
     //save to db
     db2.get('tables')
         .push(table)
         .write();
 
-    res.json(table);
+    res.json(null);
 
 
 });
@@ -163,21 +165,12 @@ app.get(`/api/table/tables/:name`, (req, res) => {
     console.log('get one table');
     const n = req.params.name;
 
-    //input sanitization
-    //check if null
-    if(!n){
-        res.status(400,'input name');
-    }
-
-    //check if name is unique
-
-    //check if input is safe
 
     db2.read();
     const db = db2.get('tables')
         .find({name: n})
         .value();
-
+    console.log(db);
     res.json(db);   
 
 });
@@ -191,39 +184,26 @@ app.delete(`/api/table/killTable`, (req, res) => {
         .write();  
         n--;
     }
-    res.json('success');
+    res.json(null);
 
 })
 
 //delete specific table from user 
 app.delete(`/api/table/killTables/:name`, (req, res) => {
     const n = req.params.name;
-
-    //input sanitization
-    //check if null
-    if(!n){
-        res.sendStatus(400,'input name');
-    }
-
-    //check if name exists
-
-    //check that input is safe (html, js)
     
     db2.get('tables')
         .remove({name: n})
         .write();
         console.log(db2.value());
     
-        res.json('success');
+        res.json(null);
 
 })
 
 //add class to table 
 app.post(`/api/table/:table/:class`, (req, res) => {
 
-    res.catch(err=>{
-        res.send(err, 'something wrong')
-    })
     
     //parameters
     let table = req.params.table;
@@ -235,7 +215,7 @@ app.post(`/api/table/:table/:class`, (req, res) => {
 
     //get class
     let db = db1.get( 'classes')
-        .filter({className: cl})
+        .filter({catalog_nbr: cl})
         .value();
 
     //rewrite courses array in specific table
@@ -245,7 +225,7 @@ app.post(`/api/table/:table/:class`, (req, res) => {
         .push(db)           
         .write();
 
-        res.json('success');
+        res.json(null);
     });
 
 

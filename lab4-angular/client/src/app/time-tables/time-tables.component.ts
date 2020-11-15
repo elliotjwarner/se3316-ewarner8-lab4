@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Scheduler, Subject } from 'rxjs';
 import { Table } from '../timetable';
+import { Sched } from '../sched';
 import { ClassesService } from '../classes.service';
 import { CommonModule } from '@angular/common';
 
@@ -14,6 +15,7 @@ import { CommonModule } from '@angular/common';
 export class TimeTablesComponent implements OnInit {
 
   tables$: Observable<Table[]>;
+  scheds$: Observable<Sched[]>;
 
   name:string;
   Tname:string;
@@ -35,6 +37,10 @@ export class TimeTablesComponent implements OnInit {
   }
 
   newTable(Nname){
+    if(!Nname){
+      console.log('invalid name');
+      return;
+    }
     this.classService.newTable(Nname).subscribe((result:Observable<Table[]>) =>{
       console.log(result);
       this.tables$ = result;
@@ -43,6 +49,10 @@ export class TimeTablesComponent implements OnInit {
   }
 
   deleteTable(Dname){
+    if(!Dname){
+      console.log('invalid name');
+      return;
+    }
     this.classService.deleteTable(Dname).subscribe((result:Observable<Table[]>) =>{
       this.tables$ = result;
     }) 
@@ -55,14 +65,26 @@ export class TimeTablesComponent implements OnInit {
   }
 
   addCourse(Tname,Cname){
+    if(!Tname){
+      console.log('invalid timetable');
+      return;
+    }
+    if(!Cname){
+      console.log('invalid course');
+      return;
+    }
     this.classService.addCourse(Tname,Cname).subscribe((result:Observable<Table[]>) =>{
       this.tables$ = result;
     }) 
   }
 
   showTable(name){
-    this.classService.showTable(name).subscribe((result:Observable<Table[]>) =>{
-      this.tables$ = result;
+    if(!name){
+      console.log('invalid name');
+      return;
+    }
+    this.classService.showTable(name).subscribe((result:Observable<Sched[]>) =>{
+      this.scheds$ = result;
     }) 
   }
 }

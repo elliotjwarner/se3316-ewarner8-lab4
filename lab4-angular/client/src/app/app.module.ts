@@ -8,7 +8,7 @@ import { TimeTablesComponent } from './time-tables/time-tables.component';
 import { ClassesComponent } from './classes/classes.component';
 
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule }   from '@angular/forms';
 
 
 
@@ -24,6 +24,7 @@ import { FormsModule } from '@angular/forms';
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     CommonModule,
     HttpClientModule
   ],
