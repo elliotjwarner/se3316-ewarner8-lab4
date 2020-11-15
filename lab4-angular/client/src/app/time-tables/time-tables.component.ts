@@ -75,7 +75,7 @@ export class TimeTablesComponent implements OnInit {
     }
     if(!Cname){
       console.log('invalid course');
-      return;
+      return; 
     }
     this.classService.addCourse(Tname,Cname).subscribe((result:Observable<Sched[]>) =>{
       this.scheds$ = result;
@@ -89,8 +89,11 @@ export class TimeTablesComponent implements OnInit {
     }
     this.classService.showTable(name).subscribe((result:Observable<Sched[]>) =>{
       this.scheds$ = result;
-      console.log(this.scheds$);
-
     }) 
+  }
+
+  //get schedule object and return courses array
+  schedCourses(name){
+    return name[0];
   }
 }

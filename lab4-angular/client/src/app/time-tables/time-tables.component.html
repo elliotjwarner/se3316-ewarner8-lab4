@@ -34,7 +34,10 @@
     </div>
 
     <!--have to only show one timetable but go through its courses-->
-    <div class="timetable"> 
-        {{scheds$.name}}
+    <div class="timetable" *ngFor="let c of schedCourses(scheds$.courses)">
+        {{c.className}}<br/>
+        {{c.course_info[0].start_time}}   -   
+        {{c.course_info[0].end_time}}
+
     </div>
 </div>
