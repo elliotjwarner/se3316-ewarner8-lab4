@@ -30,14 +30,13 @@
         <input type="text" [(ngModel)]="Cname" id="searchByCode" placeholder= "Course name"  > 
         <input type="text" [(ngModel)]="Tname" id="searchByCodeTable" placeholder= "Time Table"  >    
         <button id="addCourse" (click)="addCourse(Tname, Cname)">Add course</button><br/>
-    
     </div>
 
     <!--have to only show one timetable but go through its courses-->
-    <div class="timetable" *ngFor="let c of schedCourses(scheds$.courses)">
-        {{c.className}}<br/>
-        {{c.course_info[0].start_time}}   -   
-        {{c.course_info[0].end_time}}
-
+    <div class="timetableHolder">
+        <div class="timetable" *ngFor="let c of schedCourses(scheds$.courses)">
+            {{c[0].className}}<br/>
+            {{c[0].course_info[0].start_time}}-{{c[0].course_info[0].end_time}}
+        </div>
     </div>
 </div>

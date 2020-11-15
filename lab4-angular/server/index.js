@@ -21,17 +21,16 @@ app.use(express.json());
 app.use((req, res, next) => {
     console.log( req.method + ' request for ' + req.url);
     res.header('Access-Control-Allow-Origin', '*');
+    res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
     next();
 });
 
+//translates '%' to ' ' for tables names etc
 function spaces(s){
     str = s.replace(/%/g,' ');
     return str.trim();
 }
-
-//routes work except input validation and filtering
-//also i think im sending too much data back, could shorten that but whatever
-
 
 
 ///////////////////////////////////////////classes//////////////////////////////////////////////////////////////////
@@ -173,7 +172,7 @@ app.get(`/api/table/tables/:name`, (req, res) => {
 });
 
 //delete all tables made by user 
-app.delete(`/api/table/killTable`, (req, res) => {
+app.delete(`/api/table/killallTables`, (req, res) => {
     let n = db2.get('tables').size().value();;
     while(n>0){
         db2.get('tables')

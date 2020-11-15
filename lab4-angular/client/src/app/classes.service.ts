@@ -50,7 +50,7 @@ export class ClassesService {
 
   //delete all tables
   deleteAllTables(){
-    return this.http.delete(this.rootUrl + '/table/killTables', {headers:{'Content-Type':'application/json'}});
+    return this.http.delete(this.rootUrl + '/table/killallTables', {headers:{'Content-Type':'application/json'}});
   };
 
   //addcourse to table

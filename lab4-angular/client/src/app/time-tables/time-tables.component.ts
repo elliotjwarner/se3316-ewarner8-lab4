@@ -60,12 +60,15 @@ export class TimeTablesComponent implements OnInit {
     this.classService.deleteTable(Dname).subscribe((result:Observable<Table[]>) =>{
       this.tables$ = result;
     }) 
+    this.showTables();
   }
 
   deleteAllTables(){
     this.classService.deleteAllTables().subscribe((result:Observable<Table[]>) =>{
       this.tables$ = result;
     }) 
+    console.log('delete this shit');
+    this.showTables();
   }
 
   addCourse(Tname,Cname){
@@ -80,6 +83,7 @@ export class TimeTablesComponent implements OnInit {
     this.classService.addCourse(Tname,Cname).subscribe((result:Observable<Sched[]>) =>{
       this.scheds$ = result;
     }) 
+    this.showTables();
   }
 
   showTable(name){
@@ -94,6 +98,6 @@ export class TimeTablesComponent implements OnInit {
 
   //get schedule object and return courses array
   schedCourses(name){
-    return name[0];
+    return name;
   }
 }

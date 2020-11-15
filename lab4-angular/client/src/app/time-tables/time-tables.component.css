@@ -42,3 +42,11 @@
     padding: 5%;
     margin:1%;
   }
+
+  .timetableHolder{
+    height:40%;
+    overflow-y:auto;
+    background-color: #f4f0f8;
+    margin:2%;
+
+  }
