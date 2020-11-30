@@ -5,7 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 @Injectable({ providedIn: 'root' })
 export class ClassesService {
 
-  rootUrl = 'http://localhost:8080/api';  // URL to web api
+  rootUrl = '/api';  // URL to web api
 /*
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })

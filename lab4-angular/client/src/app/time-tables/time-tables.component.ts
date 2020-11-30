@@ -98,6 +98,6 @@ export class TimeTablesComponent implements OnInit {
 
   //get schedule object and return courses array
   schedCourses(name){
-    return name;
+    return name.courses;
   }
 }

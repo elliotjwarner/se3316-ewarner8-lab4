@@ -1,0 +1,14 @@
+{
+  "tables": [
+    {
+      "id": 0,
+      "name": "default table",
+      "courses": []
+    },
+    {
+      "id": 1,
+      "name": "hi",
+      "courses": []
+    }
+  ]
+}
